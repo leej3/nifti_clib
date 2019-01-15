@@ -176,31 +176,27 @@ if(NIFTI_INSTALL_EXPORT_NAME MATCHES "NIFTITargets")
   # This allows for find_package(NIFTI 2.1.0 NO_MODULE) to work for pulling in
   # NIFTI libraries into an external project
   include(CMakePackageConfigHelpers)
+  set(CONFIG_SETUP_DIR ${CMAKE_CURRENT_BINARY_DIR}/NIFTI)
+  set(ConfigPackageLocation lib/cmake/NIFTI)
 
   write_basic_package_version_file(
-        "${CMAKE_CURRENT_BINARY_DIR}/NIFTI/NIFTIConfigVersion.cmake"
+        ${CONFIG_SETUP_DIR}/NIFTIConfigVersion.cmake
         VERSION ${GIT_REPO_VERSION}
         COMPATIBILITY AnyNewerVersion
   )
 
-  export(EXPORT NIFTITargets
-        FILE "${CMAKE_CURRENT_BINARY_DIR}/NIFTI/NIFTITargets.cmake"
-        NAMESPACE ${NIFTI_PACKAGE_PREFIX}NIFTI::
-        )
   configure_file(cmake/NIFTIConfig.cmake
-        "${CMAKE_CURRENT_BINARY_DIR}/NIFTI/NIFTIConfig.cmake"
+        ${CONFIG_SETUP_DIR}/NIFTIConfig.cmake
         COPYONLY
         )
 
-  set(ConfigPackageLocation lib/cmake/NIFTI)
   install(EXPORT NIFTITargets
-        FILE          NIFTITargets.cmake
         NAMESPACE     ${NIFTI_PACKAGE_PREFIX}NIFTI::
         DESTINATION   ${ConfigPackageLocation}
         )
   install(FILES
-           cmake/NIFTIConfig.cmake
-           "${CMAKE_CURRENT_BINARY_DIR}/NIFTI/NIFTIConfigVersion.cmake"
+           ${CONFIG_SETUP_DIR}/NIFTIConfig.cmake
+           ${CONFIG_SETUP_DIR}/NIFTIConfigVersion.cmake
         DESTINATION   ${ConfigPackageLocation}
         COMPONENT     Development
   )
