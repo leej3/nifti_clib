@@ -106,7 +106,7 @@ if (NOT ${NIFTI_PACKAGE_PREFIX}NIFTI_FOUND)
           SOURCE_DIR     ${CMAKE_CURRENT_LIST_DIR}/nifti_clib_download # <- not standard,  remove this line to download in binary tree
           )
   FetchContent_GetProperties(fetch_nifti_clib_git_repo)
-  if(NOT fetch_nifti_clib_git_repo)
+  if(NOT fetch_nifti_clib_git_repo_POPULATED)
       set(FETCHCONTENT_QUIET OFF)
       message(STATUS "Downloading nifti_clib from github ... please wait")
       FetchContent_Populate( fetch_nifti_clib_git_repo )
