@@ -1,6 +1,6 @@
 
 add_library(nifticdf nifticdf.c )
-target_link_libraries(nifticdf PUBLIC ${NIFTI_PACKAGE_PREFIX}NIFTI::niftiio)
+target_link_libraries(nifticdf PRIVATE ${NIFTI_PACKAGE_PREFIX}NIFTI::niftiio)
 target_include_directories(nifticdf PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
         $<INSTALL_INTERFACE:${NIFTI_INSTALL_INCLUDE_DIR}>
