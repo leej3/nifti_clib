@@ -1,6 +1,6 @@
 
-add_library(nifti2 nifti2_io.c )
-target_link_libraries( nifti2 PUBLIC ${NIFTI_PACKAGE_PREFIX}NIFTI::znz ${NIFTI_SYSTEM_MATH_LIB} )
+add_library(nifti2 nifti2_io.c)
+target_link_libraries( nifti2 PUBLIC ${NIFTI_PACKAGE_PREFIX}NIFTI::znz ${NIFTI_SYSTEM_MATH_LIB})
 target_include_directories(nifti2 PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
         $<INSTALL_INTERFACE:${NIFTI_INSTALL_INCLUDE_DIR}>
