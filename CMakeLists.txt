@@ -170,7 +170,7 @@ if(USE_FSL_CODE)
 endif()
 
 set_if_not_defined(NIFTI_INSTALL_EXPORT_NAME "NIFTITargets")
-if(NIFTI_INSTALL_EXPORT_NAME EQUAL "NIFTITargets")
+if(NIFTI_INSTALL_EXPORT_NAME MATCHES "NIFTITargets")
   #######################################################################
   # CMake itself and can use some CMake facilities for creating the package files.
   # This allows for find_package(NIFTI 2.1.0 NO_MODULE) to work for pulling in
