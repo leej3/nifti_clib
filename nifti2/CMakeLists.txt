@@ -9,6 +9,18 @@ target_include_directories(${NIFTI_NIFTILIB2_NAME} PUBLIC
 
 if(NIFTI_BUILD_APPLICATIONS)
     add_executable(${NIFTI_PACKAGE_PREFIX}nifti_tool nifti_tool.c)
+
+    get_rpath() # define message_RPATH
+    set_target_properties(nifti_tool
+      PROPERTIES
+        MACOSX_RPATH ON
+        SKIP_BUILD_RPATH OFF
+        BUILD_WITH_INSTALL_RPATH OFF
+        INSTALL_RPATH "${message_RPATH}"
+        INSTALL_RPATH_USE_LINK_PATH ON
+      )
+
+
     target_link_libraries(${NIFTI_PACKAGE_PREFIX}nifti_tool PUBLIC ${NIFTI_NIFTILIB2_NAME})
     set(NIFTI2_APPS ${NIFTI_PACKAGE_PREFIX}nifti_tool)
 endif()
