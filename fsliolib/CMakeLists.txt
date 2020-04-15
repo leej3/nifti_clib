@@ -3,13 +3,8 @@
 set(NIFTI_FSLIOLIB_NAME ${NIFTI_PACKAGE_PREFIX}fslio)
 
 add_library(${NIFTI_FSLIOLIB_NAME} fslio.c )
-add_library(NIFTI::${NIFTI_FSLIOLIB_NAME} ALIAS ${NIFTI_FSLIOLIB_NAME})
-set_target_properties(${NIFTI_FSLIOLIB_NAME} PROPERTIES PUBLIC_HEADER "fslio.h;dbh.h")
+set_target_properties(${NIFTI_FSLIOLIB_NAME} PROPERTIES PRIVATE_HEADER "fslio.h;dbh.h")
 target_link_libraries( ${NIFTI_FSLIOLIB_NAME} PUBLIC ${NIFTI_PACKAGE_PREFIX}niftiio)
-target_include_directories(${NIFTI_FSLIOLIB_NAME} PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-        $<INSTALL_INTERFACE:${NIFTI_INSTALL_INCLUDE_DIR}>
-        )
 
 # Set lib version when buildung shared libs.
 if(BUILD_SHARED_LIBS)
@@ -25,13 +20,6 @@ if(NOT NIFTI_INSTALL_NO_LIBRARIES)
           INCLUDES DESTINATION ${NIFTI_INSTALL_INCLUDE_DIR}
           PUBLIC_HEADER DESTINATION ${NIFTI_INSTALL_INCLUDE_DIR}
           )
-endif()
-
-if(NOT NIFTI_INSTALL_NO_DEVELOPMENT)
-  file(GLOB __files "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
-  install(FILES ${__files}
-    DESTINATION ${NIFTI_INSTALL_INCLUDE_DIR}
-    COMPONENT Development)
 endif()
 
 if(NIFTI_BUILD_APPLICATIONS)

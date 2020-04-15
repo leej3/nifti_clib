@@ -35,6 +35,7 @@ project(NIFTI
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
 include(nifti_macros)
 
+set_property(GLOBAL PROPERTY installed_targets)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_INCLUDE_CURRENT_DIR_IN_INTERFACE ON)
@@ -78,6 +79,7 @@ endif()
 add_definitions(-DHAVE_ZLIB)
 set_if_not_defined(NIFTI_INSTALL_NO_DEVELOPMENT 0)
 set_if_not_defined(NIFTI_INSTALL_NO_LIBRARIES 0)
+set_if_not_defined(NIFTI_INSTALL_NO_APPLICATIONS 0)
 
 # Include test to verify linking in installed executables
 # The test should only be added when applications are built, and no prefix string is set.
@@ -187,6 +189,42 @@ if(NOT TARGET uninstall)
                       ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake
   )
 endif()
+
+
+get_property(installed_targets GLOBAL PROPERTY installed_targets)
+message("Installed_targets: ${installed_targets}")
+if(NIFTI_INSTALL_NO_DEVELOPMENT)
+  install(TARGETS ${installed_targets}
+          EXPORT ${NIFTI_INSTALL_EXPORT_NAME}
+          RUNTIME
+            COMPONENT RuntimeBinaries
+            DESTINATION ${NIFTI_INSTALL_RUNTIME_DIR}
+          ARCHIVE
+            DESTINATION ${NIFTI_INSTALL_LIBRARY_DIR}
+            COMPONENT RuntimeLibraries
+          LIBRARY
+            DESTINATION ${NIFTI_INSTALL_LIBRARY_DIR}
+            COMPONENT RuntimeLibraries
+          )
+else()
+  install(TARGETS ${installed_targets}
+          EXPORT ${NIFTI_INSTALL_EXPORT_NAME}
+          RUNTIME
+            COMPONENT RuntimeBinaries
+            DESTINATION ${NIFTI_INSTALL_RUNTIME_DIR}
+          ARCHIVE
+            DESTINATION ${NIFTI_INSTALL_LIBRARY_DIR}
+            COMPONENT RuntimeLibraries
+          LIBRARY
+            DESTINATION ${NIFTI_INSTALL_LIBRARY_DIR}
+            COMPONENT RuntimeLibraries
+          PUBLIC_HEADER
+            DESTINATION ${NIFTI_INSTALL_INCLUDE_DIR}
+          INCLUDES
+            DESTINATION ${NIFTI_INSTALL_INCLUDE_DIR}
+          )
+  endif()
+
 
 if(NIFTI_INSTALL_EXPORT_NAME STREQUAL "NIFTITargets")
   #######################################################################
