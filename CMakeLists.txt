@@ -102,12 +102,13 @@ if(NOT CMAKE_SKIP_INSTALL_RPATH)
 endif()
 
 #######################################################################
-enable_testing()
-include(CTest)
-#Needs an if clause and more work before testing can take place.
-set_if_not_defined(NIFTI_BUILD_TESTING ${BUILD_TESTING})
 
+set_if_not_defined(BUILD_TESTING ON)
+set_if_not_defined(NIFTI_BUILD_TESTING ${BUILD_TESTING})
 if (NIFTI_BUILD_TESTING )
+  include(CTest)
+  enable_testing()
+  #Needs an if clause and more work before testing can take place.
   option(
     DOWNLOAD_TEST_DATA
     "Allow download of data used for some tests. Can be used in conjunction with ctest label filter '-LE NEEDS_DATA'"
@@ -128,7 +129,7 @@ if (NIFTI_BUILD_TESTING )
           )
   FetchContent_GetProperties(fetch_testing_data)
   if(DOWNLOAD_TEST_DATA)
-  if(NOT fetch_testing_data)
+  if(NOT fetch_testing_data_POPULATED)
     set(FETCHCONTENT_QUIET OFF)
     FetchContent_Populate( fetch_testing_data )
   endif()
