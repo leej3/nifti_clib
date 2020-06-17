@@ -20,7 +20,6 @@ build:
 
 test:
     commands:
-      ctest -LE NEEDS_DATA
 
 about:
     home: https://github.com/NIFTI-Imaging/nifti_clib
