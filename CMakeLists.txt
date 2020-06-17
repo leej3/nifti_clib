@@ -144,11 +144,7 @@ endif()
 
 #######################################################################
 # Find unix math libraries
-if(NOT WIN32)
-    find_library(NIFTI_SYSTEM_MATH_LIB m)
-else()
-    set(NIFTI_SYSTEM_MATH_LIB "")
-endif()
+set(NIFTI_SYSTEM_MATH_LIB "m")
 #######################################################################
 add_subdirectory(znzlib)
 add_subdirectory(niftilib)
