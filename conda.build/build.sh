@@ -10,6 +10,7 @@ fi
 
 mkdir ../build && cd ../build
 
+# Build with shared libs
 cmake \
   -DCMAKE_INSTALL_PREFIX=${PREFIX} \
   -DCMAKE_BUILD_TYPE=RELWITHDEBINFO \
@@ -26,3 +27,23 @@ make install
 
 # Run all tests that do not require downloaded data
 ctest -LE NEEDS_DATA
+
+# Build the static libs
+echo -e "\n\n\nBuilding static libraries"
+cmake \
+  -DCMAKE_INSTALL_PREFIX=${PREFIX} \
+  -DCMAKE_BUILD_TYPE=RELWITHDEBINFO \
+  -DBUILD_SHARED_LIBS=OFF \
+  -DUSE_CIFTI_CODE=ON \
+  -DUSE_NIFTI2_CODE=ON \
+  -DDOWNLOAD_TEST_DATA=OFF \
+  -DCMAKE_SKIP_INSTALL_RPATH=ON \
+  -DTEST_INSTALL=OFF \
+  -DNIFTI_INSTALL_NO_DEVELOPMENT=OFF \
+  -DNIFTI_INSTALL_NO_APPLICATIONS=OFF \
+  ${CMAKE_PLATFORM_FLAGS[@]} \
+  $SRC_DIR
+
+make install
+
+
