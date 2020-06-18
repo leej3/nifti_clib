@@ -12,6 +12,7 @@ build:
 requirements:
   build:
     - cmake
+    - {{ compiler('c') }}
   host:
     - zlib
     - expat
