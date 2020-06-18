@@ -1,32 +1,36 @@
 package:
-    name: nifti_clib
-    version: {{ GIT_DESCRIBE_TAG }}
+  name: {{ name|lower }}
+  version: {{ GIT_DESCRIBE_TAG }}
 
 source:
-    rev: {{ GIT_DESCRIBE_TAG }}
-    git_url: ../
+    -    rev: {{ version }}
+    -    git_url: ../
+  #  url: https://github.com/NIFTI-Imaging/{{ name }}/archive/v{{ version }}.tar.gz
+  #sha256: 62655d8457bd04ffd80cf2f07fe8c6aac2b8b00a69fbe71f399e3d9623128630
+
+build:
+  number: 0
+  skip: True  # [win]
 
 requirements:
   build:
     - cmake
-  run:
-    - expat
+  host:
     - zlib
-
-
-build:
-    number: 1
-    skip: True  # [win]
+    - expat
 
 test:
-    commands:
+  commands:
+    - test -f ${PREFIX}/include/nifti1.h
+    - test -f ${PREFIX}/lib/libniftiio.a
 
 about:
-    home: https://github.com/NIFTI-Imaging/nifti_clib
-    license: See github repository
-    summary: 'C library for IO with the nifti file format.'
+  home: https://github.com/NIFTI-Imaging/nifti_clib
+  license: Public Domain
+  license_family: PUBLIC-DOMAIN
+  license_file: LICENSE
+  summary: 'C library for IO with the nifti file format.'
 
 extra:
-    recipe-maintainers:
-        - leej3
-        
+  recipe-maintainers:
+    - leej3
